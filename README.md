@@ -98,6 +98,7 @@ Community / Support
 
 #### Pools Using This Software
 
+* https://msr.arhash.xyz
 * https://graft.blockhashmining.com/
 * https://haven.blockhashmining.com/
 * https://loki.blockhashmining.com/
