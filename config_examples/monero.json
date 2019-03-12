@@ -1,12 +1,18 @@
 {
+    "poolHost": "your.pool.host",
+
     "coin": "monero",
     "symbol": "XMR",
     "coinUnits": 1000000000000,
+    "coinDecimalPlaces": 4,
     "coinDifficultyTarget": 120,
-    "cnAlgorithm": "cryptonight",
-    "cnVariant": 1,
-    "cnBlobType": 0,
 
+    "daemonType": "default",
+    "cnAlgorithm": "cryptonight",
+    "cnVariant": 13,
+    "cnBlobType": 0,
+    "includeHeight": true,
+    
     "logging": {
         "files": {
             "level": "info",
@@ -101,7 +107,7 @@
 
     "payments": {
         "enabled": true,
-        "interval": 300,
+        "interval": 1800,
         "maxAddresses": 50,
         "mixin": 5,
         "priority": 0,
@@ -109,6 +115,7 @@
         "dynamicTransferFee": true,
         "minerPayFee" : true,
         "minPayment": 1000000000000,
+        "maxPayment": null,
         "maxTransactionAmount": 0,
         "denomination": 100000000000
     },
@@ -146,7 +153,9 @@
 
     "wallet": {
         "host": "127.0.0.1",
-        "port": 18082
+        "port": 18082,
+        "user": "",
+        "pass": ""
     },
 
     "redis": {
@@ -158,8 +167,6 @@
     },
 
     "notifications": {
-        "poolHost": "your.pool.host",
-        "coinDecimals": 4,
         "emailTemplate": "email_templates/default.txt",
         "emailSubject": {
             "emailAdded": "Your email was registered",
@@ -219,6 +226,7 @@
 
     "telegram": {
         "enabled": false,
+        "botName": "",
         "token": "",
         "channel": "",
         "channelStats": {
@@ -227,8 +235,9 @@
         },
         "botCommands": {
             "stats": "/stats",
-            "enable": "/enable",
-            "disable": "/disable"
+            "report": "/report",
+            "notify": "/notify",
+            "blocks": "/blocks"
         }
     },
     
@@ -294,9 +303,19 @@
                 "stepInterval": 1800,
                 "maximumPeriod": 86400
             },
+            "worker_hashrate": {
+                "enabled": true,
+                "updateInterval": 60,
+                "stepInterval": 60,
+                "maximumPeriod": 86400
+            },
             "payments": {
                 "enabled": true
             }
+        },
+        "blocks": {
+            "enabled": true,
+            "days": 30
         }
     }
 }
