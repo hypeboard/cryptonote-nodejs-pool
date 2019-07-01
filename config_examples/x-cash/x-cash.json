@@ -1,16 +1,15 @@
 {
     "poolHost": "your.pool.host",
 
-    "coin": "Iridium",
-    "symbol": "IRD",
-    "coinUnits": 100000000,
-    "coinDecimalPlaces": 4,
-    "coinDifficultyTarget": 175,
+    "coin": "X-CASH",
+    "symbol": "XCASH",
+    "coinUnits": 1000000,
+    "coinDecimalPlaces": 6,
+    "coinDifficultyTarget": 120,
 
-    "daemonType": "bytecoin",
-    "cnAlgorithm": "cryptonight_pico",
-    "cnVariant": 2,
-    "cnBlobType": 2,
+    "cnAlgorithm": "cryptonight",
+    "cnVariant": 9,
+    "cnBlobType": 0,
 
     "logging": {
         "files": {
@@ -24,61 +23,59 @@
         }
     },
 
+   "customlogfiles": {
+      "transactionDetails": "logs/payments_txkey.log"
+   },
+
     "poolServer": {
         "enabled": true,
         "clusterForks": "auto",
-        "poolAddress": "** Your pool wallet address **",
-        "intAddressPrefix": null,
+        "poolAddress": "YOUR_POOLS_XCASH_ADDRESS",
+        "intAddressPrefix": "0x3fc134",
         "blockRefreshInterval": 1000,
-        "minerTimeout": 900,
-        "sslCert": "./cert.pem",
-        "sslKey": "./privkey.pem",
-        "sslCA": "./chain.pem",
+        "minerTimeout": 600,
+        "sslCert": "miningpool.crt",
+        "sslKey": "miningpool.key",
+        "sslCA": "CA.pem",
         "ports": [
-            {
+        {
                 "port": 3333,
-                "difficulty": 5000,
-                "desc": "Low end hardware"
-            },
-            {
-                "port": 4444,
-                "difficulty": 15000,
-                "desc": "Mid range hardware"
+                "difficulty": 10000,
+                "desc": "CPU Mining"
             },
             {
                 "port": 5555,
-                "difficulty": 25000,
-                "desc": "High end hardware"
+                "difficulty": 50000,
+                "desc": "Low end GPU mining"
             },
             {
                 "port": 7777,
-                "difficulty": 500000,
-                "desc": "Cloud-mining / NiceHash"
+                "difficulty": 100000,
+                "desc": "High end GPU mining"
             },
             {
-                "port": 8888,
-                "difficulty": 25000,
-                "desc": "Hidden port",
-                "hidden": true
+                "port": 9000,
+                "difficulty": 50000,
+                "desc": "SSL",
+                "ssl": true
             },
             {
                 "port": 9999,
-                "difficulty": 20000,
-                "desc": "SSL connection",
-                "ssl": true
+                "difficulty": 200000,
+                "desc": "Very high end GPU mining, Nicehash"
             }
         ],
         "varDiff": {
             "minDiff": 100,
             "maxDiff": 100000000,
-            "targetTime": 60,
-            "retargetTime": 30,
+            "targetTime": 30,
+            "retargetTime": 60,
             "variancePercent": 30,
             "maxJump": 100
         },
         "paymentId": {
             "addressSeparator": "+"
-        },
+ },
         "fixedDiff": {
             "enabled": true,
             "addressSeparator": "."
@@ -98,7 +95,7 @@
         },
         "slushMining": {
             "enabled": false,
-            "weight": 300,
+ "weight": 300,
             "blockTime": 60,
             "lastBlockCheckRate": 1
          }
@@ -106,60 +103,61 @@
 
     "payments": {
         "enabled": true,
-        "interval": 1800,
-        "maxAddresses": 50,
-        "mixin": 5,
-        "priority": 0,
-        "transferFee": 5000000,
-        "dynamicTransferFee": true,
+        "interval": 3600,
+        "maxAddresses": 1,
+        "tx_privacy_settings": "settings",
+        "mixin": 20,
+        "priority": 1,
+        "get_tx_keys": true,
+        "transferFee": 5000,
+        "dynamicTransferFee": false,
         "minerPayFee" : true,
-        "minPayment": 100000000,
+        "minPayment": 10000000000,
         "maxPayment": null,
-        "maxTransactionAmount": 0,
-        "denomination": 10000000
+        "maxTransactionAmount": 10000000000000,
+        "denomination": 1000
     },
-
-    "blockUnlocker": {
+ "blockUnlocker": {
         "enabled": true,
         "interval": 30,
-        "depth": 20,
-        "poolFee": 0.8,
-        "devDonation": 0.2,
+        "depth": 60,
+        "poolFee": 1,
+        "devDonation": 0.0,
         "networkFee": 0.0
     },
 
     "api": {
         "enabled": true,
         "hashrateWindow": 600,
-        "updateInterval": 5,
-        "bindIp": "0.0.0.0",
+        "updateInterval": 10,
+        "bindIp": "YOUR_SERVERS_IP_ADDRESS",
         "port": 8117,
-        "blocks": 30,
-        "payments": 30,
-        "password": "your_password",
+        "blocks": 20,
+        "payments": 20,
+        "password": "PASSWORD_FOR_THE_ADMIN_AREA",
         "ssl": false,
         "sslPort": 8119,
         "sslCert": "./cert.pem",
         "sslKey": "./privkey.pem",
         "sslCA": "./chain.pem",
-        "trustProxyIP": true
+        "trustProxyIP": false
     },
 
     "daemon": {
         "host": "127.0.0.1",
-        "port": 13007
+        "port": 18281
     },
 
     "wallet": {
         "host": "127.0.0.1",
-        "port": 13008
+        "port": YOUR_RPC_WALLET_PORT
     },
 
     "redis": {
         "host": "127.0.0.1",
         "port": 6379,
         "auth": null,
-        "db": 0,
+ "db": 0,
         "cleanupInterval": 15
     },
 
@@ -170,6 +168,16 @@
             "workerConnected": "Worker %WORKER_NAME% connected",
             "workerTimeout": "Worker %WORKER_NAME% stopped hashing",
             "workerBanned": "Worker %WORKER_NAME% banned",
+            "blockFound": "Block %HEIGHT% found !",
+            "blockUnlocked": "Block %HEIGHT% unlocked !",
+            "blockOrphaned": "Block %HEIGHT% orphaned !",
+            "payment": "We sent you a payment !"
+        },
+        "emailMessage": {
+            "emailAdded": "Your email has been registered to receive pool notifications.",
+            "workerConnected": "Your worker %WORKER_NAME% for address %MINER% is now connected from ip %IP%.",
+            "workerTimeout": "Your worker %WORKER_NAME% for address %MINER% has stopped submitting hashes on %LAST_HASH%.",
+ "workerBanned": "Worker %WORKER_NAME% banned",
             "blockFound": "Block %HEIGHT% found !",
             "blockUnlocked": "Block %HEIGHT% unlocked !",
             "blockOrphaned": "Block %HEIGHT% orphaned !",
@@ -199,7 +207,7 @@
     "email": {
         "enabled": false,
         "fromAddress": "your@email.com",
-        "transport": "sendmail",
+"transport": "sendmail",
         "sendmail": {
             "path": "/usr/sbin/sendmail"
         },
@@ -219,7 +227,7 @@
             "key": "your-private-key",
             "domain": "mg.yourdomain"
         }
-    },
+ },
 
     "telegram": {
         "enabled": false,
@@ -232,15 +240,14 @@
         },
         "botCommands": {
             "stats": "/stats",
-            "report": "/report",
-            "notify": "/notify",
-            "blocks": "/blocks"
+            "enable": "/enable",
+            "disable": "/disable"
         }
     },
-    
+
     "monitoring": {
         "daemon": {
-            "checkInterval": 60,
+    "checkInterval": 60,
             "rpcMethod": "getblockcount"
         },
         "wallet": {
@@ -253,14 +260,14 @@
         "source": "tradeogre",
         "currency": "USD"
     },
-    
+
     "charts": {
         "pool": {
             "hashrate": {
                 "enabled": true,
                 "updateInterval": 60,
                 "stepInterval": 1800,
-                "maximumPeriod": 86400
+ "maximumPeriod": 86400
             },
             "miners": {
                 "enabled": true,
@@ -280,7 +287,7 @@
                 "stepInterval": 10800,
                 "maximumPeriod": 604800
             },
-            "price": {
+ "price": {
                 "enabled": true,
                 "updateInterval": 1800,
                 "stepInterval": 10800,
@@ -300,19 +307,9 @@
                 "stepInterval": 1800,
                 "maximumPeriod": 86400
             },
-            "worker_hashrate": {
-                "enabled": true,
-                "updateInterval": 60,
-                "stepInterval": 60,
-                "maximumPeriod": 86400
-            },
-            "payments": {
+ "payments": {
                 "enabled": true
             }
-        },
-        "blocks": {
-            "enabled": true,
-            "days": 30
         }
     }
 }
